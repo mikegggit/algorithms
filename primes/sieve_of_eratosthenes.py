@@ -19,7 +19,7 @@ Suffers from memory requirements for larger primes.
 """
 
 
-def run(max):
+def getPrimes(max):
   
   # potentials
   sieve = [True for n in range(0,max+1)]
@@ -42,12 +42,11 @@ def run(max):
 
     # mark multiples of current prime non-prime...
     while (multiple <= max):
-      print("i={}, multipler={}, multiple={}, sieve[multiple]={}".format(i, multiplier, multiple, sieve[multiple]))
+      #print("i={}, multipler={}, multiple={}, sieve[multiple]={}".format(i, multiplier, multiple, sieve[multiple]))
       sieve[multiple] = False
       multiplier += 1
       multiple = i * multiplier
  
-    print(sieve)      
   
   # list primes
   primes = [ i for i, v in enumerate(sieve) if v and i > 1 ]
