@@ -43,20 +43,6 @@ def partition(ar):
   print(ar)
   return il
  
-def quicksortRecursive(ar):
-  """
-  recursively partitions ar into left and right subarrays.
-  
-  """
-  if len(ar) <= 1:
-    print("base case [ar={}]".format(ar))
-    return ar                # return -1 if nothing left to sort
-
-  i = partition(ar)
-
-  print("partition result={}".format(i))
-  return quicksortRecursive(ar[0:i]) + [ar[i]] + quicksortRecursive(ar[i+1:])
- 
 def quicksort(ar):
   """sorts ar using quicksort algorithm. 
 
@@ -64,9 +50,12 @@ def quicksort(ar):
   in the left partition, the rest to the right.
   """
   if len(ar) <= 1:
-    return
+    return ar
 
-  return quicksortRecursive(ar) 
+  i = partition(ar)
+
+  print("partition result={}".format(i))
+  return quicksort(ar[0:i]) + [ar[i]] + quicksort(ar[i+1:])
 
 if __name__ == "__main__":
   #a = [5,4,9,1]
