@@ -31,17 +31,26 @@ def getRange(a):
 class LL:
   head = None
   tail = None
+  size = 0
 
-  def __init__(this):
-    pass
+  def __init__(this, data = None):
+    this.append(data)
 
   def append(this, data):
     n = Node(data)
-    temp = this.tail
-    this.tail = n
-    temp.next = this.tail
+    if this.head is None:
+      this.head = Node(data)
+      this.tail = this.head
+    else:
+      temp = this.tail
+      this.tail = n
+      temp.next = this.tail
 
-  
+    this.size += 1
+
+  def isEmpty(this):
+    return this.size == 0
+ 
 class Node:
 
   next = None
@@ -55,12 +64,15 @@ def pigeon(a):
   r = getRange(a)
  
   # build buckets
-  buckets = [LL()] * ((r[1] - r[0]) + 1)
+  buckets = [None] * ((r[1] - r[0]) + 1)
 
   lo = r[0]
  
   for i in a:
-    buckets[i - lo].append(i)
+    if buckets[i - lo] is None:
+      buckets[i - lo] = LL(i)
+    else:
+      buckets[i - lo].append(i)
 
   sorted = [None] * len(a)
 
@@ -68,8 +80,11 @@ def pigeon(a):
 
   for i in buckets:
     if i is not None:
-      sorted[j] = i
-      j += 1
+      n = i.head
+      while n is not None:
+        sorted[j] = n.data 
+        j += 1
+        n = n.next
 
   return sorted
 
