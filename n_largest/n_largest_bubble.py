@@ -7,12 +7,16 @@ def swap(a, i, j):
   a[i] = a[j]
   a[j] = temp
 
-def nlargest(a, n):
-  """Returns n largest elements from a using bubble sort n times"""
+def nlargest(a, k):
+  """Returns n largest elements from a using bubble sort n times
+  
+  Complexity is O(n * k).  Since bubble sort is only run k times.
+
+  Normally, bubble sort runs in O(N^2)."""
 
   i = 0 
  
-  while i < n:
+  while i < k:
     j = 0
     
     while j < len(a) - 1:
@@ -22,7 +26,7 @@ def nlargest(a, n):
   
     i += 1    
 
-  return (a[len(a)-n:])
+  return (a[len(a)-k:])
 
 if __name__ == "__main__":
   a = [random.randint(0, 10000) for i in  range(30)]
