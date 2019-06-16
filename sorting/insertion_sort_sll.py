@@ -17,9 +17,11 @@ class LL:
   def __init__(this):
     this.size = 0
 
-  def append(this, data):
+  def add(this, data):
+    n = None
     if this.size == 0:
-      this.head = Node(data)
+      n = Node(data)
+      this.head = n
       this.tail = this.head
     else:
       temp = this.tail
@@ -27,52 +29,96 @@ class LL:
       this.tail = n
       temp.next = this.tail
     this.size += 1
+    return n
 
-  def insertionSort(this):
-    sorted = LL()
-    
+  def addAll(this, *data):
+    for i in data:
+      this.add(i)
+
+  def __str__(this):
+    s = ""
+
     n = this.head
-    
-    # iterate over items in unsorted list 
-    while n is not None:
-      if sorted.head is None:
-        sorted.head = Node(n.data)
-      elif sorted.head.data >= n.data:
-        temp = sorted.head
-        sorted.head = Node(n.data)
-        sorted.head.next = temp
-      else:
-        search = sorted.head
-        
-        while search.next is not None and n.data > search.next.data:
-          search = search.next
-    
-        # either search.next is empty, or n should be inserted before it
-        if not search.next:
-          search.next = Node(n.data)
-        else:
-          temp = search.next
-          search.next = Node(n.data)
-          search.next.next = temp 
-
+    while n:
+      s += " -> "
+      s += str(n.data) 
       n = n.next
-    return sorted
 
-  def print(this):
-    n = this.head
- 
-    while n is not None:
-      print(n.data, end=" -> ")
-      n = n.next 
+    return s
 
-    print("")
+  def sort(this):
+    """Using insertion sort.
+
+    Uses two pointers, one to track the current item to be inserted,
+    the other scanning the ll from left to right for the insertion position.
+    """
+
+    print("sort")
+
+    # ll is either empty or size 1
+    if this.size <= 1:
+      return 
+
+    cur = this.head.next
+   
+    prev = None 
+    while cur:
+      search = this.head
+      searchp = None
+      done = False
+      while search and search != cur and not done:
+        if cur.data < search.data:       # found insertion point...
+          # insert cur before search
+          if not searchp:                # we have a new head
+            oldhead = this.head
+            oldcurnext = cur.next
+            this.head = cur
+            cur.next = oldhead
+            if oldhead.next == cur:      # head needs to point to something new
+              oldhead.next = oldcurnext
+
+            if not oldcurnext:
+              prev.next = None
+              return
+
+            if prev:
+              cur = prev
+              prev.next = oldcurnext
+
+          else:                          # insert after p, before i
+            oldcurnext = cur.next
+            cur.next = searchp.next
+            searchp.next = cur
+
+            if not oldcurnext:
+              prev.next = None
+              return
+
+            if prev:
+              cur = prev
+              prev.next = oldcurnext
+
+          done = True
+
+        else:                            # haven't found insertion pt yet
+          searchp = search 
+          search = search.next
+        
+      prev = cur 
+      cur = cur.next
+      
 
 if __name__ == "__main__":
   l = LL()
-  for i in range(100):
+
+  #l.addAll(1,2,3)
+  #l.addAll(22, 99, 27)
+  #l.addAll(99, 27, 22)
+
+  for i in range(20):
     n = random.randint(0, 100)
-    l.append(n)
- 
-  l.print()
-  sorted = l.insertionSort()
-  sorted.print()
+    l.add(n)
+  
+  print("presort={}".format(l))
+  l.sort()
+  print("sorted={}".format(l))
