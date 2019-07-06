@@ -76,9 +76,6 @@ def hasPathBFS(g, a, b):
       nextQueue.enqueue(child)
 
   return False
-
-  
- 
    
 if __name__ == "__main__":
   g = Graph()

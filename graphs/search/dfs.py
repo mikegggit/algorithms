@@ -15,39 +15,6 @@ class Graph:
   def print(this):
     print("\n".join([str(i[0]) + " -> " + ", ".join(str(j) for j in i[1]) for i in this.m.items()]))
 
-visited = {}
-
-class Stack:
-  head = None
-    
-  class _Node:
-    data = None
-    next = None
-
-    def __init__(this, data):
-      this.data = data
-
-  def __init__(this):
-    this.head = None
-
-  def push(this, data):
-    n = Stack._Node(data)
-
-    if not this.head:
-      this.head = n
-    else:
-      temp = this.head
-      this.head = n
-      this.head.next = temp
-
-  def pop(this):
-    if not this.head:
-      return None
-
-    temp = this.head
-    this.head = this.head.next
-    return temp 
-  
 def hasPathDFS(g, a, b):
   if not a in g.m:
     return False
